@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mda" default="xjc" basedir=".">
+  <property name="dsldir" value="dsl"/>
+  <property name="srcgdir" value="src/main/java"/>
+  <property name="basedir" value="pt/quintans/mda/raw"/>
+  <property name="basepackage" value="pt.quintans.mda.raw"/>
+
+   <path id="compilepath">
+      <fileset dir="lib">
+         <include name="*.jar"/>
+      </fileset>
+   </path>
+
+  <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+	  <classpath>
+		<fileset dir="lib" includes="*.jar" />
+	  </classpath>
+	</taskdef>
+	
+  <target name="xjc">
+	<xjc destdir="${srcgdir}" package="${basepackage}.domain" removeOldOutput="true" binding="bindings.xjc" extension="true">
+      <schema  dir="${dsldir}" includes="entity.xsd"/>
+      <schema  dir="${dsldir}" includes="dto.xsd"/>
+      <schema  dir="${dsldir}" includes="service.xsd"/>
+      <schema  dir="${dsldir}" includes="role.xsd"/>
+      <schema  dir="${dsldir}" includes="lov.xsd"/>
+      <schema  dir="${dsldir}" includes="screen.xsd"/>
+      <schema  dir="${dsldir}" includes="constants.xsd"/>
+      <!--
+	  <produces dir="${srcgdir}/${basedir}/domain" includes="**/*" />
+      -->
+	</xjc>
+
+		<!--
+		<replace file="${srcgdir}/${basedir}/domain/Basic.java" token="public class Basic {" value="public class Basic extends pt.quintans.mda.core.ElementType {"/>
+		-->
+  </target>
+  
+</project>

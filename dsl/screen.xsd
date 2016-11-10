@@ -1,0 +1,122 @@
+<?xml version="1.0"?>
+<!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by . (ORiON) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mda.quintans.pt" targetNamespace="http://www.mda.quintans.pt" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:include schemaLocation="base.xsd"/>
+	<xs:element name="screen">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="basic">
+					<xs:sequence>
+						<xs:element name="head" minOccurs="0">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="viewSection">
+										<xs:attribute name="target" use="required"/>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="search" type="viewSection" minOccurs="0"/>
+						<xs:element name="orders" type="ordersType" minOccurs="0"/>
+						<xs:element name="result" minOccurs="0">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="viewSection">
+										<xs:attribute name="pageSize" type="xs:int"/>
+										<xs:attribute name="selectable" type="xs:boolean" default="false"/>
+										<xs:attribute name="sortable" type="xs:boolean" default="true"/>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="display" minOccurs="0">
+							<xs:complexType>
+								<xs:complexContent>
+									<xs:extension base="viewSection">
+										<xs:attribute name="embeded" type="xs:boolean" default="false"/>
+									</xs:extension>
+								</xs:complexContent>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="navigations" type="navigationsType" minOccurs="0"/>
+					</xs:sequence>
+					<xs:attribute name="entity" use="required"/>
+					<xs:attribute name="example"/>
+					<xs:attribute name="softDelete" type="xs:boolean" default="false"/>
+					<xs:attribute name="canDelete" type="xs:boolean" default="true"/>
+					<xs:attribute name="canSave" type="xs:boolean" default="true"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- SEARCH -->
+	<xs:complexType name="viewSection">
+		<xs:sequence>
+			<xs:element name="view" type="viewType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="viewType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="field" type="fieldType" maxOccurs="unbounded"/>
+			<xs:element name="chain" type="chainType" maxOccurs="unbounded"/>
+		</xs:choice>
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="description"/>
+	</xs:complexType>
+	<xs:complexType name="fieldType">
+		<xs:attribute name="target" use="required"/>
+		<xs:attribute name="name"/>
+		<xs:attribute name="show"/>
+		<xs:attribute name="readonly" type="xs:boolean" default="false"/>
+		<xs:attribute name="required" type="xs:boolean"/>
+		<xs:attribute name="exact" type="xs:boolean" default="false"/>
+		<xs:attribute name="pop" type="xs:boolean" default="true"/>
+		<xs:attribute name="raw" type="xs:boolean" default="false"/>
+		<xs:attribute name="width" type="xs:int"/>
+		<xs:attribute name="labelWidth" type="xs:int"/>
+		<xs:attribute name="fieldWidth" type="xs:int"/>
+		<xs:attribute name="length" type="xs:int"/>
+		<xs:attribute name="lines" type="xs:int" default="1"/>		<xs:attribute name="span" type="xs:int" default="1" />
+
+		<xs:attribute name="searcher"/>
+		<xs:attribute name="description"/>
+		<xs:attribute name="alias"/>
+		<xs:attribute name="defaultValue"/>
+		<xs:attribute name="subTarget"/>
+		<xs:attribute name="custom" type="xs:boolean" default="false"/>
+		<xs:attribute name="editable" type="xs:boolean" default="false"/>
+	</xs:complexType>
+	<xs:complexType name="chainType">
+		<xs:sequence>
+			<xs:element name="field" type="fieldType"
+				maxOccurs="unbounded" />
+		</xs:sequence>
+		<xs:attribute name="name" use="required" />
+		<xs:attribute name="description" />
+		<xs:attribute name="column" type="xs:int" default="1" />
+		<xs:attribute name="compact" type="xs:boolean" default="false" />
+	</xs:complexType>
+	<!-- NAVIGATION -->
+	<xs:complexType name="navigationsType">
+		<xs:sequence>
+			<xs:element name="navigation" type="navigationType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="navigationType">
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="target" use="required"/>
+		<xs:attribute name="description"/>
+		<xs:attribute name="tip"/>
+	</xs:complexType>
+	<!-- ORDERS -->
+	<xs:complexType name="ordersType">
+		<xs:sequence>
+			<xs:element name="order" type="orderType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="orderType">
+		<xs:attribute name="target" use="required"/>
+		<xs:attribute name="description" use="required"/>
+		<xs:attribute name="default" type="xs:boolean" default="false"/>
+	</xs:complexType>
+</xs:schema>

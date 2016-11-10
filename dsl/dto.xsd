@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.mda.quintans.pt" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mda.quintans.pt">
+	<xs:include schemaLocation="base.xsd"/>
+	<xs:element name="dto">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="basic">
+					<xs:sequence>
+						<xs:element name="attributes" type="DtoAttributeType" minOccurs="0"/>
+						<xs:element name="references" type="ReferencesType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- ATTRIBUTES -->
+	<xs:complexType name="DtoAttributeType">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="lov" type="dto_lov" minOccurs="0"/>
+			<xs:element name="string" type="dto_string" minOccurs="0"/>
+			<xs:element name="integer" type="dto_integer" minOccurs="0"/>
+            <xs:element name="long" type="dto_long" minOccurs="0"/>
+			<xs:element name="boolean" type="dto_boolean" minOccurs="0"/>
+			<xs:element name="decimal" type="dto_decimal" minOccurs="0"/>
+			<xs:element name="currency" type="dto_currency" minOccurs="0"/>
+			<xs:element name="date" type="dto_date" minOccurs="0"/>
+            <xs:element name="time" type="dto_time" minOccurs="0"/>
+            <xs:element name="datetime" type="dto_datetime" minOccurs="0"/>
+            <xs:element name="timestamp" type="dto_timestamp" minOccurs="0"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="dto_lov">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType">
+				<xs:attribute name="target" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="dto_string">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType">
+				<xs:attribute name="length" type="xs:integer"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="dto_date">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+    <xs:complexType name="dto_time">
+        <xs:complexContent>
+            <xs:extension base="AttrBaseAttributeType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="dto_datetime">
+        <xs:complexContent>
+            <xs:extension base="AttrBaseAttributeType"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="dto_timestamp">
+        <xs:complexContent>
+            <xs:extension base="AttrBaseAttributeType"/>
+        </xs:complexContent>
+    </xs:complexType>
+	<xs:complexType name="dto_decimal">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="dto_currency">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="dto_integer">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+    <xs:complexType name="dto_long">
+        <xs:complexContent>
+            <xs:extension base="AttrBaseAttributeType"/>
+        </xs:complexContent>
+    </xs:complexType>
+	<xs:complexType name="dto_boolean">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType"/>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>
