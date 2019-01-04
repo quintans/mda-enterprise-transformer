@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.mda.quintans.pt" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mda.quintans.pt">
+	<xs:include schemaLocation="base.xsd"/>
+	<xs:element name="role">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="basic">
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

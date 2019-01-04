@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mda.quintans.pt" targetNamespace="http://www.mda.quintans.pt" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:include schemaLocation="base.xsd"/>
+	<xs:element name="constants">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="basic">
+					<xs:sequence>
+						<xs:element name="const" type="constant" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- model var type -->
+	<xs:complexType name="constant">
+        <xs:complexContent>
+            <xs:extension base="BaseType">
+		        <xs:attribute name="value"/>
+		        <xs:attribute name="single" type="xs:boolean" default="true"/>
+		        <xs:attribute name="type" type="modelVarType" default="string"/>
+		        <xs:attribute name="kind"/><!-- if type custom is chosen, use this to define type -->
+            </xs:extension>
+        </xs:complexContent>	
+	</xs:complexType>
+	<xs:simpleType name="modelVarType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="char"/>
+			<xs:enumeration value="string"/>
+			<xs:enumeration value="integer"/>
+            <xs:enumeration value="long"/>
+			<xs:enumeration value="decimal"/>
+			<xs:enumeration value="byte"/>
+			<xs:enumeration value="boolean"/>
+			<xs:enumeration value="date"/>
+			<xs:enumeration value="time"/>
+			<xs:enumeration value="timestamp"/>
+            <xs:enumeration value="custom"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

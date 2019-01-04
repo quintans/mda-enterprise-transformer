@@ -1,0 +1,55 @@
+<jxb:bindings version="1.0" 
+  xmlns:jxb="http://java.sun.com/xml/ns/jaxb" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+  xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc" 
+  jxb:extensionBindingPrefixes="xjc">
+    
+    <jxb:globalBindings>
+        <xjc:superClass name="pt.quintans.mda.core.ElementType"/>
+    </jxb:globalBindings>
+        
+    <jxb:bindings schemaLocation="../xsd/entity.xsd">
+        <jxb:bindings node="//xs:complexType[@name='DaoOperationType']/xs:complexContent/xs:extension/xs:choice">
+            <jxb:property name="AttributesList"/>
+        </jxb:bindings>    
+        <jxb:bindings node="//xs:complexType[@name='DaoType']/xs:choice">
+            <jxb:property name="DaoList"/>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:complexType[@name='AssociationType']/xs:choice">
+            <jxb:property name="AssociationsList"/>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:complexType[@name='AttributeType']/xs:choice">
+            <jxb:property name="AttributesList"/>
+        </jxb:bindings>
+        <jxb:bindings node="//xs:complexType[@name='ent_flags']/xs:complexContent/xs:extension/xs:choice">
+            <jxb:property name="FlagList"/>
+        </jxb:bindings>    
+    </jxb:bindings>
+    
+    <jxb:bindings schemaLocation="../xsd/dto.xsd">
+        <jxb:bindings node="//xs:complexType[@name='DtoAttributeType']/xs:choice">
+            <jxb:property name="AttributesList"/>
+        </jxb:bindings>    
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="../xsd/service.xsd">
+        <jxb:bindings node="//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:choice">
+            <jxb:property name="AttributesList"/>
+        </jxb:bindings>    
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="../xsd/role.xsd">
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="../xsd/lov.xsd">
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="../xsd/screen.xsd">
+        <jxb:bindings node="//xs:complexType[@name='viewType']/xs:choice">
+            <jxb:property name="AttributesList"/>
+        </jxb:bindings>    
+    </jxb:bindings>
+
+    <jxb:bindings schemaLocation="../xsd/constants.xsd">
+    </jxb:bindings>
+</jxb:bindings>

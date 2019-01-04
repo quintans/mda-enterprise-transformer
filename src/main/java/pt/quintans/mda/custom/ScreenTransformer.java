@@ -12,7 +12,6 @@ import pt.quintans.mda.core.Model;
 import pt.quintans.mda.core.ModelElement;
 import pt.quintans.mda.core.WorkerStore;
 import pt.quintans.mda.model.dao.Example;
-import pt.quintans.mda.model.dto.DataTranferObject;
 import pt.quintans.mda.model.entity.Association;
 import pt.quintans.mda.model.entity.Attribute;
 import pt.quintans.mda.model.entity.Entity;
@@ -60,9 +59,9 @@ public class ScreenTransformer extends AbstractTransformer {
 		screen.setStereotypeAlias(getStereotypeAlias());
 
 		pt.quintans.mda.raw.domain.Screen modelScreen = (pt.quintans.mda.raw.domain.Screen) basic;			
-		screen.setSoftDelete(modelScreen.getSoftDelete());
-		screen.setCanDelete(modelScreen.getCanDelete());		
-		screen.setCanSave(modelScreen.getCanSave());		
+		screen.setSoftDelete(modelScreen.isSoftDelete());
+		screen.setCanDelete(modelScreen.isSoftDelete());		
+		screen.setCanSave(modelScreen.isCanSave());		
 	}
 
 	@Override
@@ -121,12 +120,12 @@ public class ScreenTransformer extends AbstractTransformer {
 		if(modelScreen.getResult() != null){
 			screen.setResults(loadView(screen, modelScreen.getResult().getView(), entity, objectName, false, false));
 			screen.setResultPageSize(modelScreen.getResult().getPageSize());
-			screen.setResultSelectable(modelScreen.getResult().getSelectable());
-			screen.setResultSortable(modelScreen.getResult().getSortable());
+			screen.setResultSelectable(modelScreen.getResult().isSelectable());
+			screen.setResultSortable(modelScreen.getResult().isSortable());
 		}
 		if(modelScreen.getDisplay() != null){
 			screen.setDisplays(loadView(screen, modelScreen.getDisplay().getView(), entity, objectName, false, false));
-			screen.setEmbededDisplay(modelScreen.getDisplay().getEmbeded());
+			screen.setEmbededDisplay(modelScreen.getDisplay().isEmbeded());
 		}
 
 
@@ -155,7 +154,7 @@ public class ScreenTransformer extends AbstractTransformer {
 				order.setDescription(ot.getDescription());
 
 				index++;
-				if(ot.getDefault())
+				if(ot.isDefault())
 					screen.setDefaultOrderIndex(index);
 
 				String path = ot.getTarget();
@@ -251,7 +250,7 @@ public class ScreenTransformer extends AbstractTransformer {
 						ChainType ct = (ChainType) et;
 						chain.setName(ct.getName());
 						chain.setDescription(ct.getDescription());
-						chain.setCompact(ct.getCompact());
+						chain.setCompact(ct.isCompact());
 						for(FieldType ft : ct.getField()){
 							Field field = addField(ft, chain, screen, entity, view.getName(), objectName, search, head);
 							view.setEditable(view.isEditable() || field.isEditable());
@@ -311,21 +310,21 @@ public class ScreenTransformer extends AbstractTransformer {
 		field.setLength(ft.getLength() != null ? ft.getLength() : ft.getWidth());
 		field.setDescription(ft.getDescription());
 
-		field.setCustom(ft.getCustom());		
+		field.setCustom(ft.isCustom());		
 		/*
 		if(field.getCustom())
 			return field;
 			*/
 
-		field.setReadOnly(head || ft.getReadonly());
-		field.setExact(ft.getExact());
+		field.setReadOnly(head || ft.isReadonly());
+		field.setExact(ft.isExact());
 		field.setLines(ft.getLines());
 		field.setSearcher(ft.getSearcher() != null ? ft.getSearcher() : ft.getName()); // para a pop up lov
 		field.setAlias(ft.getAlias() != null ? ft.getAlias() : field.getDescription());
 		field.setShow(ft.getShow());
-		field.setRaw(ft.getRaw());
-		field.setEditable(ft.getEditable());
-		field.setPop(ft.getPop());
+		field.setRaw(ft.isRaw());
+		field.setEditable(ft.isEditable());
+		field.setPop(ft.isPop());
 		if(ft.getDefaultValue() != null)
 			field.setDefaultValue(ft.getDefaultValue());
 
@@ -342,9 +341,9 @@ public class ScreenTransformer extends AbstractTransformer {
 						screen.addUsedAttributes(attr);
 						field.setTarget(attr);
 						if(search)
-							field.setRequired( ft.getRequired() == null ? false : ft.getRequired() );
+							field.setRequired( ft.isRequired() == null ? false : ft.isRequired() );
 						else
-							field.setRequired(ft.getRequired() == null ? (!attr.getNullable() || attr.getKey()) : ft.getRequired());
+							field.setRequired(ft.isRequired() == null ? (!attr.getNullable() || attr.getKey()) : ft.isRequired());
 						/*
 						if(field.getWidth() == null)
 							field.setWidth(attr.getLength());
@@ -384,9 +383,9 @@ public class ScreenTransformer extends AbstractTransformer {
 						e.getIdentity() != null &&  
 						e.getIdentity().getName().equals(ft.getTarget())){
 					if(search)
-						field.setRequired(ft.getRequired() == null ? false : ft.getRequired());
+						field.setRequired(ft.isRequired() == null ? false : ft.isRequired());
 					else
-						field.setRequired(true && (ft.getRequired() == null ? true : ft.getRequired()));
+						field.setRequired(true && (ft.isRequired() == null ? true : ft.isRequired()));
 					screen.addUsedAttributes(e.getIdentity());
 					field.setTarget(e.getIdentity());
 				} 
@@ -408,11 +407,11 @@ public class ScreenTransformer extends AbstractTransformer {
 							target, viewName, ft.getTarget(), objectName), ex);
 				}
 
-				if(!ft.getRaw() && ft.getShow() == null)
+				if(!ft.isRaw() && ft.getShow() == null)
 					throw new RuntimeException(String.format("O atributo 'show' deve ser especificado em 'field' %s da 'view' %s em %s", target, viewName, objectName));
 
 				if(search)
-					field.setRequired(ft.getRequired() == null ? false : ft.getRequired());
+					field.setRequired(ft.isRequired() == null ? false : ft.isRequired());
 				else{
 					boolean key = false;
 					Association association = field.getAssociation();
@@ -423,14 +422,14 @@ public class ScreenTransformer extends AbstractTransformer {
 						}
 					}
 
-					field.setRequired(ft.getRequired() == null ? (!association.getNullable() || key) : ft.getRequired());
+					field.setRequired(ft.isRequired() == null ? (!association.getNullable() || key) : ft.isRequired());
 				}
 
 				if(search && field.getSearcher() == null){ // se não tem searcher, e para procurar directamente
 					field.setTarget( field.getAssociation().getTarget().fetchAttribute( field.getShow() ) );
 				} 
 
-				if(!ft.getRaw()){
+				if(!ft.isRaw()){
 					String attrs[] = ft.getShow().split("\\+");
 					List<String> custom = new ArrayList<String>();
 					field.setAttributesName(custom);

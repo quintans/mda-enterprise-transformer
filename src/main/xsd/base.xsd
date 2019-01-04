@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.mda.quintans.pt" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mda.quintans.pt">
+	<xs:complexType name="basic">
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="alias"/>
+		<xs:attribute name="description"/>
+		<xs:attribute name="comments"/>
+		<xs:attribute name="parent"/>		
+		<xs:attribute name="behaviors"/>
+		<xs:attribute name="root" type="xs:boolean" default="false"/>
+	</xs:complexType>
+	<!-- BASE TYPE -->
+	<xs:complexType name="BaseType">
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="alias"/>
+		<xs:attribute name="comments"/>
+	</xs:complexType>
+	<!-- REFERENCES -->
+	<xs:complexType name="ReferencesType">
+		<xs:sequence>
+			<xs:element name="reference" type="ReferenceType" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReferenceType">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:attribute name="single" type="xs:boolean" default="true"/>
+				<xs:attribute name="paginate" type="xs:boolean" default="false"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ATTR BASE MODEL TYPE -->
+	<xs:complexType name="AttrBaseAttributeType">
+		<xs:complexContent>
+			<xs:extension base="BaseType">
+				<xs:attribute name="single" type="xs:boolean" default="true"/>
+				<xs:attribute name="nullable" type="xs:boolean" default="true"/>
+				<xs:attribute name="defaultValue"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<!-- ATTR MODEL TYPE -->
+	<xs:complexType name="attr_model">
+		<xs:complexContent>
+			<xs:extension base="AttrBaseAttributeType">
+				<xs:attribute name="type" use="required"/>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+</xs:schema>

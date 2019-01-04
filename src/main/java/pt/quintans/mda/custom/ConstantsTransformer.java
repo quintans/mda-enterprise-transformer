@@ -47,7 +47,7 @@ public class ConstantsTransformer extends AbstractTransformer {
 				constants.getItems().add(item);
 				item.setName(it.getName());
 				item.setAlias(it.getAlias() != null ? it.getAlias() : it.getName());
-				item.setSingle(it.getSingle());
+				item.setSingle(it.isSingle());
 				item.setType(it.getType().value());
 				item.setKind(it.getKind());
 				item.setComments(it.getComments());

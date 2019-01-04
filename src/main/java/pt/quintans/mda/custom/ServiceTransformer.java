@@ -50,7 +50,7 @@ public class ServiceTransformer extends AbstractTransformer {
 		srv.setStereotype(getStereotype());
 		srv.setStereotypeAlias(getStereotypeAlias());
 		srv.setBehaviors(basic.getBehaviors());
-		srv.setInternal(modelObject.getInternal());
+		srv.setInternal(modelObject.isInternal());
 	}
 
 	@Override
@@ -81,13 +81,13 @@ public class ServiceTransformer extends AbstractTransformer {
 					operation.addDependency(element);
 				} else if(oper.getType() != null && oper.getType().indexOf(".") > 0)
 					operation.setCustomType(true);
-				operation.setSingle(oper.getSingle());
-				operation.setPaginate(oper.getPaginate());
+				operation.setSingle(oper.isSingle());
+				operation.setPaginate(oper.isPaginate());
 				operation.setBehaviors(oper.getBehaviors());
 				operation.setComments(oper.getComments());
-				operation.setTransactional(oper.getTransactional());
+				operation.setTransactional(oper.isTransactional());
 				// if undefined use parents
-                operation.setInternal(oper.getInternal() != null ? oper.getInternal() : modelObject.getInternal());
+                operation.setInternal(oper.isInternal() != null ? oper.isInternal() : modelObject.isInternal());
                 operation.setScheduled(oper.getScheduled());
 				
 				// attributes
@@ -98,7 +98,7 @@ public class ServiceTransformer extends AbstractTransformer {
 						Attribute at = new Attribute(operation);
 						attrs.add(at);
 						at.setName(attr.getName());
-						at.setNullable(attr.getNullable());
+						at.setNullable(attr.isNullable());
 						// lov
 						if(attr.getElementType().equals("model")){
 							AttrModel attrModel = (AttrModel) attr;
@@ -119,7 +119,7 @@ public class ServiceTransformer extends AbstractTransformer {
 							at.setType(attr.getElementType());
 						}
 							
-						at.setSingle(attr.getSingle());
+						at.setSingle(attr.isSingle());
 						at.setComments(attr.getComments());
 					}
 				}		

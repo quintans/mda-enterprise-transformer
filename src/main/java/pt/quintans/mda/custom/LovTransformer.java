@@ -36,7 +36,7 @@ public class LovTransformer extends AbstractTransformer {
 		lov.setLocation(basic.getLocation());
 		lov.setStereotype(getStereotype());
 		lov.setStereotypeAlias(getStereotypeAlias());
-		lov.setNumeric(modelObject.getNumeric());
+		lov.setNumeric(modelObject.isNumeric());
 		lov.setKeylen(modelObject.getKeylen());
 		lov.setBehaviors(basic.getBehaviors());
 

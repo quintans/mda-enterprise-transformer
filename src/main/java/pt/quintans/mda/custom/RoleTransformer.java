@@ -4,7 +4,6 @@ import pt.quintans.mda.core.AbstractTransformer;
 import pt.quintans.mda.core.Model;
 import pt.quintans.mda.core.ModelElement;
 import pt.quintans.mda.core.WorkerStore;
-import pt.quintans.mda.model.dto.DataTranferObject;
 
 public class RoleTransformer extends AbstractTransformer {
 

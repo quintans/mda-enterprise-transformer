@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<xs:schema targetNamespace="http://www.mda.quintans.pt" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.mda.quintans.pt">
+	<xs:include schemaLocation="base.xsd"/>
+	<xs:element name="listOfValues">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="basic">
+					<xs:sequence>
+						<xs:element name="item" type="itemType" maxOccurs="unbounded"/>
+					</xs:sequence>
+					<xs:attribute name="keylen" type="xs:int" default="4"/>
+					<xs:attribute name="numeric" type="xs:boolean" default="false"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="itemType">
+		<xs:attribute name="name" use="required"/>
+		<xs:attribute name="key" use="required"/>
+		<xs:attribute name="value"/>
+	</xs:complexType>
+</xs:schema>

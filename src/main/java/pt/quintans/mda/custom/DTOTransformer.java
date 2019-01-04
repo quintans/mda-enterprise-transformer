@@ -57,9 +57,9 @@ public class DTOTransformer extends AbstractTransformer {
 				Attribute at = new Attribute(dto);
 				attrs.add(at);
 				at.setName(attr.getName());
-				at.setNullable(attr.getNullable());
+				at.setNullable(attr.isNullable());
 				at.setType(attr.getElementType());
-				at.setSingle(attr.getSingle());
+				at.setSingle(attr.isSingle());
 				at.setDefaultValue(attr.getDefaultValue());
 			}
 		}
@@ -106,8 +106,8 @@ public class DTOTransformer extends AbstractTransformer {
 					throw new RuntimeException(String.format("Unknown reference %s in %s does not exist in the model",
 							reference.getName(), basic.getName()));
 
-				Reference r = new Reference(nome, element, reference.getSingle());
-				r.setPaginate(reference.getPaginate());
+				Reference r = new Reference(nome, element, reference.isSingle());
+				r.setPaginate(reference.isPaginate());
 				if (element instanceof DataTranferObject || element instanceof pt.quintans.mda.model.lov.ListOfValues) {
 					dto.addDependency(element);
 				} else if (element instanceof pt.quintans.mda.model.entity.Entity) {

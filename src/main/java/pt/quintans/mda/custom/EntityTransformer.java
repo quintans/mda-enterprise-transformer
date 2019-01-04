@@ -64,28 +64,28 @@ public class EntityTransformer extends AbstractTransformer {
 		at.setId(attr.getId());
 		at.setName(attr.getName());
 		at.setAlias(Tools.isEmpty(attr.getAlias()) ? attr.getName() : attr.getAlias());
-		at.setNullable(attr.getNullable());
+		at.setNullable(attr.isNullable());
 		at.setType(attr.getElementType());
 		if (attr.getLength() != null)
 			at.setLength(Integer.parseInt(attr.getLength()));
 		at.setDefaultValue(attr.getDefault());
 		at.setComments(attr.getComments());
-		at.setDeleter(attr.getDeleter());
+		at.setDeleter(attr.isDeleter());
 		
 		return at;
 	}
 
 	private void defineKey(pt.quintans.mda.model.entity.Entity ent, Attribute at, BaseAttributeType attr) {
 		List<Attribute> keys = ent.getKeys();
-		if (attr.getKey()) {
-			at.setKey(attr.getKey());
+		if (attr.isKey()) {
+			at.setKey(attr.isKey());
 			keys.add(at);
-			if (attr.getUnique() && !WorkerStore.get().isQuiet())
+			if (attr.isUnique() && !WorkerStore.get().isQuiet())
 				System.out.println(String.format(
 						"==> A configuracao Unique em %s.%s sera ignorada porque esta definida como key", ent.getName(),
 						attr.getName()));
 		} else {
-			at.setUnique(attr.getUnique());
+			at.setUnique(attr.isUnique());
 		}
 	}
 
@@ -109,8 +109,8 @@ public class EntityTransformer extends AbstractTransformer {
 		final pt.quintans.mda.model.entity.Entity ent = instanciate();
 		me.setTransformed(ent);
 		ent.setId(modelEntity.getId());
-		ent.setReadOnly(modelEntity.getReadonly());
-        ent.setNested(modelEntity.getNested());
+		ent.setReadOnly(modelEntity.isReadonly());
+        ent.setNested(modelEntity.isNested());
 		ent.setName(objectName);
 		ent.setAlias(modelEntity.getAlias() == null ? modelEntity.getName() : modelEntity.getAlias());
 		ent.setNamespace(basic.getNamespace());
@@ -118,7 +118,7 @@ public class EntityTransformer extends AbstractTransformer {
 		ent.setStereotype(getStereotype());
 		ent.setStereotypeAlias(getStereotypeAlias());
 		ent.setBehaviors(basic.getBehaviors());
-		ent.setRoot(basic.getRoot());
+		ent.setRoot(basic.isRoot());
 		ent.setComments(basic.getComments());
 
 		// attributes
@@ -235,7 +235,7 @@ public class EntityTransformer extends AbstractTransformer {
 					}
 					
 					if(at != null){
-						if(attr.getDeleter())
+						if(attr.isDeleter())
 							ent.setDeleter(at);
 						
 						at.setBehaviors(attr.getBehaviors());
@@ -250,7 +250,7 @@ public class EntityTransformer extends AbstractTransformer {
                             constraints.add(c);                            
                             c.setTarget(at);
         
-                            c.setParameter(ct.getParameter());
+                            c.setParameter(ct.isParameter());
                             Object value = null;
                             if(!c.isParameter()) {
                                 ListOfValues lov = c.getTarget().getLov();
@@ -312,13 +312,13 @@ public class EntityTransformer extends AbstractTransformer {
 						operation.setModeledType(true);
 					} else if (oper.getType() != null && oper.getType().indexOf(".") > 0)
 						operation.setCustomType(true);
-					operation.setSingle(oper.getSingle());
-					operation.setPaginate(oper.getPaginate());
+					operation.setSingle(oper.isSingle());
+					operation.setPaginate(oper.isPaginate());
 					// exposed to roles
 					operation.setRoles(buildRoles(model, modelEntity, oper.getRoles()));
 					operation.setBehaviors(oper.getBehaviors());
 					operation.setComments(oper.getComments());
-					operation.setTransactional(oper.getTransactional());
+					operation.setTransactional(oper.isTransactional());
 
 					// attributes
 					if (oper.getAttributesList() != null) {
@@ -328,7 +328,7 @@ public class EntityTransformer extends AbstractTransformer {
 							Attribute at = new Attribute(ent);
 							attrs.add(at);
 							at.setName(attr.getName());
-							at.setNullable(attr.getNullable());
+							at.setNullable(attr.isNullable());
 							if (attr.getElementType().equals("model")) {
 								OpModel opModel = (OpModel) attr;
 								if (model.hasObject(opModel.getType())) {
@@ -348,7 +348,7 @@ public class EntityTransformer extends AbstractTransformer {
 								at.setType(attr.getElementType());
 							}
 
-							at.setSingle(attr.getSingle());
+							at.setSingle(attr.isSingle());
 							at.setComments(attr.getComments());
 						}
 					}
@@ -368,18 +368,18 @@ public class EntityTransformer extends AbstractTransformer {
 						.getEntity());
 				ent.addDependency(targetEntity);
 				association.setTarget(targetEntity);
-				association.setCascade(assoc.getCascade());
-				association.setWeak(assoc.getWeak() || assoc.getCascade());
-				association.setNoForeignKey(assoc.getNoForeignKey());
+				association.setCascade(assoc.isCascade());
+				association.setWeak(assoc.isWeak() || assoc.isCascade());
+				association.setNoForeignKey(assoc.isNoForeignKey());
 				boolean many = assoc instanceof HasManyType;
 				if (many)
 					ent.setManyAssociated(true);
 				else
 					ent.setSingleAssociated(true);
 				association.setMany(many);
-				association.setNavigate(assoc.getNavigate());
-				association.setNullable(assoc.getNullable());
-				association.setOwner(assoc.getOwner());
+				association.setNavigate(assoc.isNavigate());
+				association.setNullable(assoc.isNullable());
+				association.setOwner(assoc.isOwner());
 				// association.setAlias(assoc.getAlias() == null ? assoc.getName() : assoc.getAlias());
 				association.setAlias(assoc.getAlias());
 				association.setOtherEnd(assoc.getOtherEnd());
@@ -445,7 +445,7 @@ public class EntityTransformer extends AbstractTransformer {
                                 throw new RuntimeException("The attribute \"target\" was not found in the association " + assoc.getName());
                             }
 
-                            c.setParameter(ct.getParameter());
+                            c.setParameter(ct.isParameter());
                             Object value = null;
                             if(!c.isParameter()) {
                                 ListOfValues lov = c.getTarget().getLov();
@@ -508,7 +508,7 @@ public class EntityTransformer extends AbstractTransformer {
 							reference.getName(), basic.getName()));
 
 				String nome = reference.getAlias() != null ? reference.getAlias() : reference.getName();
-				Reference r = new Reference(nome, element, reference.getSingle());
+				Reference r = new Reference(nome, element, reference.isSingle());
 				if (element instanceof DataTranferObject) {
 					r.setToDTO(true);
 				} else if (element instanceof pt.quintans.mda.model.entity.Entity) {
