@@ -5,7 +5,7 @@
   jxb:extensionBindingPrefixes="xjc">
     
     <jxb:globalBindings>
-        <xjc:superClass name="pt.quintans.mda.core.ElementType"/>
+        <xjc:superClass name="pt.quintans.mda.enterprise.core.ElementType"/>
     </jxb:globalBindings>
         
     <jxb:bindings schemaLocation="../xsd/entity.xsd">
