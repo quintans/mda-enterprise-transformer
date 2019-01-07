@@ -38,7 +38,7 @@ public class AllInOneMigrateM2T extends Model2TextAbstract {
 				for(Map.Entry<Object, List<Object>> entry : newElementsMap.entrySet()) {
 					putInPipe(PipelineKeys.GROUP, entry.getValue());
 					putInPipe(PipelineKeys.GROUPKEY, entry.getKey());
-					migrate(work, entry.getValue(), oldElementsMap.getOrDefault(entry, Collections.emptyList()));
+					migrate(work, entry.getValue(), oldElementsMap.getOrDefault(entry.getKey(), Collections.emptyList()));
 					removeFromPipe(PipelineKeys.GROUP);
 				}
 			} else {
